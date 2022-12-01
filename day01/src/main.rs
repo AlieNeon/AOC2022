@@ -17,11 +17,10 @@ fn main() {
 fn get_elfs(input: &str) -> Vec<u32> {
     let binding = input.to_owned();
     let input: Vec<&str> = binding.lines().collect();
-    let mut elfs = Vec::new();
-    let mut ptr: usize = 0;
-    elfs.push(0);
+    let mut elfs = Vec::from([0]);
     for line in input{
-        if line == "" {ptr+=1; elfs.push(0); continue;}
+        if line == "" {elfs.push(0); continue;}
+        let ptr = elfs.len()-1;
         elfs[ptr] += u32::from_str(line).expect("all content must be numbers");
     }
     elfs
