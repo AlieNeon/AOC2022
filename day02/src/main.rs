@@ -24,7 +24,7 @@ fn get_true_round(a: &str, b: &str) -> i32 {
         "C" => 3,
         _ => panic!("WTF")
     };
-    ((b/3+2)+a)%3+b
+    ((b/3+2)+a-1)%3+1+b
 }
 
 fn get_round(a: &str, b: &str) -> i32 {
