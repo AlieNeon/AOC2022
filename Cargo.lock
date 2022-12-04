@@ -11,5 +11,13 @@ name = "day02"
 version = "0.1.0"
 
 [[package]]
+name = "day03"
+version = "0.1.0"
+
+[[package]]
+name = "day04"
+version = "0.1.0"
+
+[[package]]
 name = "tiesto"
 version = "0.1.0"
