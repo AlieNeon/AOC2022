@@ -41,10 +41,7 @@ fn get_max_3_elf(elfs: &mut Vec<u32>) -> u32{
 
 #[cfg(test)]
 mod test {
-    use super::*;
-    #[test]
-    fn it_works() {
-        let input = r#"1000
+    const INPUT: &str = r#"1000
 2000
 3000
 
@@ -58,26 +55,15 @@ mod test {
 9000
 
 10000"#;
-        let tst = get_elfs(input);
+    use super::*;
+    #[test]
+    fn calories1() {
+        let tst = get_elfs(INPUT);
         assert_eq!(get_max_elf(&tst), 24000);
     }
     #[test]
-    fn it_works2() {
-        let input = r#"1000
-2000
-3000
-
-4000
-
-5000
-6000
-
-7000
-8000
-9000
-
-10000"#;
-        let mut tst = get_elfs(input);
+    fn calories2() {
+        let mut tst = get_elfs(INPUT);
         assert_eq!(get_max_3_elf(&mut tst), 45000);
     }
 }

@@ -61,19 +61,16 @@ fn get_points(input: &str, f: &dyn Fn(&str,&str) -> i32) -> i32 {
 
 #[cfg(test)]
 mod test {
+    const INPUT: &str = r#"A Y
+B X
+C Z"#;
     use super::*;
     #[test]
-    fn it_works() {
-        let input = r#"A Y
-B X
-C Z"#;
-        assert_eq!(get_points(input, &get_round), 15);
+    fn rps1() {
+        assert_eq!(get_points(INPUT, &get_round), 15);
     }
     #[test]
-    fn it_works2() {
-        let input = r#"A Y
-B X
-C Z"#;
-        assert_eq!(get_points(input, &get_true_round), 12);
+    fn rps2() {
+        assert_eq!(get_points(INPUT, &get_true_round), 12);
     }
 }

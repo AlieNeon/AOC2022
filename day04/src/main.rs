@@ -31,25 +31,19 @@ fn get_range(s: &str) -> (u32, u32){
 
 #[cfg(test)]
 mod test {
+    const INPUT: &str = r#"2-4,6-8
+2-3,4-5
+5-7,7-9
+2-8,3-7
+6-6,4-6
+2-6,4-8"#;
     use super::*;
     #[test]
-    fn it_works() {
-        let input = r#"2-4,6-8
-2-3,4-5
-5-7,7-9
-2-8,3-7
-6-6,4-6
-2-6,4-8"#;
-        assert_eq!(input.lines().map(|l| get_ranges(l)).filter(|t| ranges_contain(t.0,t.1)).count(), 2);
+    fn ranges1() {
+        assert_eq!(INPUT.lines().map(|l| get_ranges(l)).filter(|t| ranges_contain(t.0,t.1)).count(), 2);
     }
     #[test]
-    fn it_works2() {
-        let input = r#"2-4,6-8
-2-3,4-5
-5-7,7-9
-2-8,3-7
-6-6,4-6
-2-6,4-8"#;
-        assert_eq!(input.lines().map(|l| get_ranges(l)).filter(|t| ranges_overlap(t.0,t.1)).count(), 4);
+    fn ranges2() {
+        assert_eq!(INPUT.lines().map(|l| get_ranges(l)).filter(|t| ranges_overlap(t.0,t.1)).count(), 4);
     }
 }

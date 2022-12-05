@@ -39,10 +39,10 @@ fn grup_repeat(grup: &Vec<&str>) -> char{
     };
     for c in repeated {
         if let Some(i) = grup[2].find(c){
-            return (grup[2].chars().nth(i).expect("should have failed before"));
+            return grup[2].chars().nth(i).expect("should have failed before");
         }
     };
-    return panic!();
+    panic!("Should not get here")
 }
 
 fn get_repeat(s: &str) -> char{
@@ -54,30 +54,24 @@ fn get_repeat(s: &str) -> char{
             return s2.chars().nth(i).expect("should have failed before");
         }
     };
-    return panic!();
+    panic!("Should not get here")
 }
 
 #[cfg(test)]
 mod test {
+    const INPUT: &str =r#"vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+ttgJtRGJQctTZtZT
+CrZsJsPPZsGzwwsLwLmpwMDw"#;
     use super::*;
     #[test]
-    fn it_works() {
-        let input = r#"vJrwpWtwJgWrhcsFMMfFFhFp
-jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-PmmdzqPrVvPwwTWBwg
-wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw"#;
-        assert_eq!(input.lines().map(|l| get_priori(get_repeat(l))).sum::<u32>(), 157);
+    fn backpacks1() {
+        assert_eq!(INPUT.lines().map(|l| get_priori(get_repeat(l))).sum::<u32>(), 157);
     }
     #[test]
-    fn it_works2() {
-        let input = r#"vJrwpWtwJgWrhcsFMMfFFhFp
-jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-PmmdzqPrVvPwwTWBwg
-wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw"#;
-        assert_eq!(get_groups(input).iter().map(|g| get_priori(grup_repeat(g))).sum::<u32>(), 70);
+    fn backpacks2() {
+        assert_eq!(get_groups(INPUT).iter().map(|g| get_priori(grup_repeat(g))).sum::<u32>(), 70);
     }
 }
