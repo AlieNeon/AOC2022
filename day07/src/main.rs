@@ -4,53 +4,44 @@ use std::collections::HashMap;
 
 fn main() {
     const FILE_PATH: &str = "input";
-    println!("Hi this is the sixth day of AOC2022, first we will read the file {}", FILE_PATH);
+    println!("Hi this is the seventh day of AOC2022, first we will read the file {}", FILE_PATH);
     let contents = fs::read_to_string(FILE_PATH)
         .expect("Should have been able to read the file");
 
-}
-#[derive(Debug)]
-enum FileSys<'a>{
-    File(u32),
-    Dir(HashMap<&'a str, FileSys<'a>>)
+    println!("The sum of all dirs less than 100000 is {}", parse(&contents).values().filter(|x| **x<100000).sum::<u32>());
+    println!("The smallest directory to erase to make the update is {}", get_smaller_dir_for_update(&contents));
 }
 
-fn traverse<'a>(root: &'a mut HashMap<&'a str, FileSys<'a>>, ptr: &'a Vec<&'a str>) -> HashMap<&'a str, FileSys<'a>>{
-    let mut out = root;
-    for dir in *ptr{
-        out = match out.get_mut(dir).expect("u messed up the dirs") {
-            FileSys::Dir(x) => x,
-            _ => panic!("u messed up the dirs, tis a file")
-        }
-    };
-    *out
-}
-
-fn parse(s: &str) -> HashMap<&str, FileSys>{
-    let mut root = HashMap::new();
-    let mut s = s.lines();
-    s.next();
-    let mut ptr: Vec<&str> = vec![];
-    for line in s {
+fn parse(s: &str) -> HashMap<usize, u32>{
+    let mut sizes = HashMap::new();
+    let mut ptr: Vec<usize> = vec![];
+    let mut linode: usize = 0;
+    for line in s.lines() {
         let mut line = line.split(" ");
         match line.next().expect("lol") {
             "$" => if line.next().expect("must have a command") == "cd"{
                 match line.next().expect("must have a name") {
-                    ".." => ptr.pop(),
-                    name => {ptr.push(name); None},
+                    ".." => {ptr.pop(); ()},
+                    _ => {ptr.push(linode); sizes.insert(linode, 0); linode+=1;},
                 };
             }else{continue;},
             "dir" =>{
-                let root = traverse(&mut root, &ptr);
-                root.insert(line.next().expect("must have a name"), FileSys::Dir(HashMap::new()));
+                continue
             },
             size =>{
-                let root = traverse(&mut root, &ptr);
-                root.insert(line.next().expect("must have a name"), FileSys::File(u32::from_str(size).expect("NaN")));
+                ptr.iter().for_each(|d| *sizes.get_mut(d).expect("dir must exist")+= u32::from_str(size).expect("NaN"));
             },
         }
     }
-    root
+    sizes
+}
+
+fn get_smaller_dir_for_update(input: &str) -> u32 {
+    let sol = parse(input);
+    let target = 30000000 - (70000000 - sol.get(&0).expect("Root must exist"));
+    let mut sol: Vec<_> = sol.values().collect();
+    sol.sort();
+    **sol.iter().filter(|x| ***x > target).next().expect("If there is not enough dir that mean the update is already posible dingus")
 }
 
 #[cfg(test)]
@@ -80,7 +71,11 @@ $ ls
 7214296 k"#;
     use super::*;
     #[test]
-    fn coms1_1() {
-        dbg!(parse(INPUT));
+    fn update1() {
+        assert_eq!(parse(INPUT).values().filter(|x| **x<100000).sum::<u32>(), 95437);
+    }
+    #[test]
+    fn update2() {
+        assert_eq!(get_smaller_dir_for_update(INPUT), 24933642);
     }
 }
