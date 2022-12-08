@@ -25,7 +25,6 @@ fn find_marker(s: &str, lenght: usize) -> usize {
 
 #[cfg(test)]
 mod test {
-    const INPUT: &str = r#""#;
     use super::*;
     #[test]
     fn coms1_1() {
