@@ -58,7 +58,6 @@ fn move_tail(head: (i32, i32), tail: (i32, i32)) -> (i32, i32) {
         (x,-2) => (tail.0+x, tail.1-1),
         _ => unreachable!()
     }
-
 }
 
 #[cfg(test)]
@@ -86,6 +85,10 @@ U 20"#;
     }
     #[test]
     fn rope2() {
+        assert_eq!(get_positions(INPUT, 9).len(), 1);
+    }
+    #[test]
+    fn rope3() {
         assert_eq!(get_positions(INPUT2, 9).len(), 36);
     }
 }
