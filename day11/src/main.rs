@@ -4,7 +4,7 @@ use std::collections::BinaryHeap;
 
 fn main() {
     const FILE_PATH: &str = "input";
-    println!("Hi this is the nineth day of AOC2022, first we will read the file {}", FILE_PATH);
+    println!("Hi this is the eleventh day of AOC2022, first we will read the file {}", FILE_PATH);
     let contents = fs::read_to_string(FILE_PATH)
         .expect("Should have been able to read the file");
 
