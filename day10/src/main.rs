@@ -9,6 +9,24 @@ fn main() {
 
     println!("The sum of the asked for signals is: {}", get_dump(&contents).iter().enumerate().take_while(|(n, _)| n<=&220).map(|(c, rx)| (c+1 ,(c+1) as i32*rx))
     .filter(|(n, _)| (n/20)%2==1).step_by(20).map(|(_, out)| out).sum::<i32>());
+    print!("{}", get_pixels(get_dump(&contents)));
+}
+
+fn get_pixels(i: Vec<i32>) -> String {
+    let mut screen = String::new();
+    let mut pixel = 0;
+    while pixel < i.len() {
+        for r in 0..40{
+            if r-1 == i[pixel] || r == i[pixel] || r+1 == i[pixel]{
+                screen.push('#')
+            }else{
+                screen.push('.')
+            }
+            pixel +=1;
+        }
+        screen.push_str("\n")
+    }
+    screen
 }
 
 fn get_dump(s: &str) -> Vec<i32> {
@@ -182,5 +200,15 @@ noop"#;
     fn crt1() {
         assert_eq!(get_dump(INPUT).iter().enumerate().take_while(|(n, _)| n<=&220).map(|(c, rx)| (c+1 ,(c+1) as i32*rx))
         .filter(|(n, _)| (n/20)%2==1).step_by(20).map(|(_, out)| out).sum::<i32>(), 13140);
+    }
+    #[test]
+    fn crt2() {
+        assert_eq!(get_pixels(get_dump(INPUT)), r#"##..##..##..##..##..##..##..##..##..##..
+###...###...###...###...###...###...###.
+####....####....####....####....####....
+#####.....#####.....#####.....#####.....
+######......######......######......####
+#######.......#######.......#######.....
+"#);
     }
 }
