@@ -3,12 +3,11 @@ use std::str::FromStr;
 
 fn main() {
     const FILE_PATH: &str = "input";
-    println!("Hi this is the twELFth day of AOC2022, first we will read the file {}", FILE_PATH);
+    println!("Hi this is the thirteenth day of AOC2022, first we will read the file {}", FILE_PATH);
     let contents = fs::read_to_string(FILE_PATH)
         .expect("Should have been able to read the file");
     
     let mut mes = parse(&contents);
-
     println!("The sum of indexes of ordered packets is: {}", mes.chunks(2).map(|l| l[0] < l[1]).enumerate().filter(|(_, b)| *b).map(|(i,_)| i+1).sum::<usize>());
     mes.push(parse_line("[[2]]"));
     mes.push(parse_line("[[6]]"));
@@ -50,28 +49,7 @@ impl PartialOrd for Item{
 }
 impl Ord for Item {
     fn cmp(&self, other: &Self) -> Ordering {
-        match self {
-            Item::Num(s) => {
-                match other {
-                    Item::Num(o) => {
-                        s.cmp(o)
-                    },
-                    Item::List(_) => {
-                        (Item::List(vec![self.clone()])).cmp(other)
-                    },
-                }
-            },
-            Item::List(s) => {
-                match other {
-                    Item::List(o) => {
-                        s.cmp(o)
-                    },
-                    Item::Num(_) => {
-                        self.cmp(&Item::List(vec![other.clone()]))
-                    },
-                }
-            },
-        }
+        self.partial_cmp(other).expect("Order must exist")
     }
 }
 
